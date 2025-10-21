@@ -1,0 +1,63 @@
+#+title: Org Mode Basics(Doom)
+#+DESCRIPTION: Org document for basic things, commands, etc.
+#+Me
+
+* Headlines and subheaders
+** level 2
+*** level 3
+**** level 4
+***** level 5
+asdasd
+****** level 6
+******* etc.
+
+** close the tree: zc
+** open the tree: zo
+** close everything: zM
+** open everything: zR
+
+* Basic commands for writing
+** org-toggle-heading : SPC-m-h
+** org-toggle-item : SPC-m-i
++ Unordered list item
++ list 2
+- list
+  1. ordered list
+  - ordered list
+
+* Motion(lol)
+** movement : same as vim(hjkl)
+** next/prev heading: gj/gk OR CTR-j/k
+** move parent/child element : gh/gl
+
+* Structure Editing
+** insert new heading after subtree: CTRL - RET
+** promote/demote heading: M-h/l
+** promote/demote current subtree : M-Shift-h/l
+** move subtree/list item up/down : M-j/k
+** move list item up/down but not subtree : M-Shift-j/k
+
+* Evil mode binds
+** select an element : var
+** selent an element : dae
+** select a subtree : vaR
+** delete subtree : daR
+** yank subtree: yiR
+* Insert Snippets
+** Basically differnent templates/snippets SPC-i-s
+** Thu Aug 28 11:16:51 2025
+
+* TODO Basics
+** TODO example one
+** TODO example two
+** Remove TODO : Shift-left
+** Toggle todo state: SPC-m-t
+** org-schedule : SPC-m-d-s
+SCHEDULED: <2025-09-16 Tue>
+
+* Create a Checkbox : [ ]
+- [ ] eggs
+- [ ] milk
+- [ ] example 3
+** Toggle box: C-c C-c or Enter
+** Org agenda : SPC-o-a

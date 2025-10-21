@@ -1,0 +1,259 @@
+#+title: Computer Architecture
+#+Notes for Computer Architecture
+
+* REVIEW
+** Basic Questions
+*** What is a program?
+- A program is a sequence of instructions writtern for the CPU to execute.
+*** What is data?
+- Data is the information the program operates on.
+*** What does it mean to run the program?
+- Running a program means executing its instructions one by one on the CPU.
+*** What computer component executes programs?
+- CPU (Central Processing Unit).
+*** Where is the running program stored? What else (other that the program code) is stored there?
+- Stored in RAM
+- RAM also stores data, stack, heap, variables, and intermediate results.
+*** What do we know about RAM memory?
+- Random-access (you can reach any cell directly).
+- Volatile (loses contents when power is off).
+- Slower than the CPU cache.
+*** What is memory stall?
+- When the cpu has to wait because data/instructions aren't ready from RAM.
+*** What long-term storage do we have?
+- Hard drives(HDD), solid state drives(SSD),optical discs, flash memory.
+*** What is a executable file?
+- A binary file containing machine code instructions that the CPU can execute directly.
+*** How speed of CPU, RAM and hard disk compare to each other?
+- CPU > RAM > DISK => fastest to slowest
+- CPU works in nanoseconds, RAM in tens/hundreds on ns, storage in ms.
+*** What is cache memory? What is it's purpose?
+- Small, very fast memory(RAM) inside/near the CPU.
+- Stores frequently used instructions/data to reduce memory stall. Doesn't have to read for RAM again.
+*** What is ROM memory? What does it store?
+- Read-only memory.
+- Stores firmware/BIOS - permanent startup instructions for the computer.
+*** What is machine cycle?
+- The basic process the CPU follows to execute instructions.
+*** What are the basic steps of machine cycle?
+- Fetch -> Decode -> Execute -> Write-Back.
+*** What does frequency measure? What is the measurement unit of frequency?
+- Measures how many cycles per second occur.
+- Unit: Hertz (Hz = cycles/second).
+*** What is CPU clock? What is CPU frequency?
+- CPU clock: the timing signal that drives the CPU's operations.
+- CPU frequency: how many cycles per second the clock ticks (GHz range).
+*** What is CPU core? What does it mean "quad-core CPU", "octa-core CPU"?
+- A core is an independent processing unit inside a CPU.
+- How many cores means how many tasks in can run in parallel.
+*** What does memory look like?
+- As a linear array of bytes, each with a unique address.
+*** What is a byte? What is a bit? How many bits are in a byte?
+- Bit: smallest unit, 0 or 1.
+- Byte: 8 bits.
+*** What is memory address?
+- A unique number assigned to each byte in memory.
+*** What is the momory address of a larger chunk of memory?
+- It's the address of the first byte in that chunk.
+*** What is the length of memory address? What does it mean "32-bit address"?
+- The number of bits used for addresses.
+- Means the address is 32-bits long
+*** How much memory can we address/use with the given length of memory address?
+- With n-bit address -> 2^n bytes of addressable memory.
+- Ex: 32-bit -> 2^32 = 4GB max.
+*** How long should memory addresses be to address a given amount of memory?
+- Solve log_2 (memory size in bytes).
+- Example: 1TB needs log_2(2^40) = 40-bit addresses.
+*** Can memory contain nothing at all?
+- No, every cell holds some binary value (even if it's meaningless/unused).
+*** What is the relationship between C++ variable, RAM and memory address?
+- A variable is stored in RAM.
+- Each variable occupies memory at a specific address.
+*** What is a C++ pointer?
+- A variable that stores the memory address of another variable.
+*** What is the most common size of the following C++ data types? Does signed/unsigned affect those sizes?
+- Char: 1 byte
+- Short: 2 bytes
+- int: 4 bytes
+- long: 4 or 8 bytes (depends on system)
+- long long: 8 bytes
+- float: 4 bytes
+- double: 8 bytes
+- signed/unsigned does not change the size, only the bits are interpreted.
+*** Hexadecimal numbers. Why do we use them? How to convert from hexadecimal to binary and back quickly?
+- Hex is a compact way to represent binary.
+- Each hex digit is 4 bits.
+- Conversion 1 hex digit <-> 4-bit binary group.
+*** What is a "word"?
+- Natural data size of the CPU(32 or 64-bit).
+*** What is a PC?
+- Program Counter: CPU register holding the address of the next instruction to fetch.
+*** What is the language that the CPU understands?
+- Machine language (binary machine code).
+*** How can we execute program written in higher-level languages?
+- It must be translated into machine code (via compiler or interpreter).
+*** What is a compiler? What are compiler advatages?
+- Compiler: Translates entire high-level program into machine code before execution.
+- Advantages: Fast, error checking before run, optimized code.
+*** What is an interpreter? What are interpreter advantages?
+- Interpreter: translates and executes program line by line at runtime.
+- Advantages are easier debugging, platform independence, no need to compile before running.
+
+* Performance
+- Frequency is not everything
+- CPU architecture
+- Number of CPU cores
+- Cache
+- RAM
+- Program efficiency
+- Compiler Efficiency
+  - Benchmark suite: Standard program used to compare performance of computers.
+** Performance Items
+*** What is CPU Frequency?
+- We measure frequency in Hz
+  Example:
+        1. 1hz = 1 time/second
+        2. 30hz = 30 times/second
+        3. 0.2 hz = 0.2 times/second = 1 time/5 seconds
+*** What hurts program execution speed more: weak hardware or inefficient program code?
+- poorly written code hurts the execution speed more. It will overload the system and slows it down.
+
+*** Conversions
+- GHz = 1 000 000 000Hz
+- 0.5 GHz = 500 Mhz = 500 000 KHz = 500 000 000 hz
+- 2.5 GHz = 2500 Mhz = 2 500 000 kHz = 2 500 000 000 Hz
+- G = 1 000 000 000 = 10^9
+- M = 1 000 000 = 10^6
+- k = 1 000 = 10^3
+- 1 kHz = 1000 hz
+- 1 kB = 1024 B
+
+*** Dynamic Instruction Count
+- Number of instructions that cpu must execute in order to finish the program.
+**** CPI (cycles per instruction)
+- average CPI = total numbers of cycles / dynamic instr count
+- 1 000 000 instructions.average CPI 2.1 cycles/instr.
+ Total cycles = CPI * inst.count = 2.1 (cycles/instr) * 1 000 000 instr = 2 100 000 cycles
+  -  average CPI = 0.6
+- 10 Instructions. Each instr. 1 cycles. averageCPI = num_cycles / num_instructions
+**** Execution Times:
+- elapsed time (10 seconds)
+- cpu time ( 7 seconds )
+  DO RATIOS FOR EXAMS, NEVER DIFFERENCE
+
+***** EXAMPLE PROBLEM (p34)
+
+Our favorite program runs in 10 seconds on computer A, which has a 2GHz clock. We are trying to help a computer designer build a computer B, which will run this program in 6 seconds. The desinger has determined that a substantial increase in the clock rate is possible, but the increase will affect the rest of the CPU design, causing computer B to require 1.2 times as many clock cycles as computer A for this program. What clock rate should we tell the designer to target?
+
+Execution Time : 10 seconds
+Clock Rate = 2GHZ = 2 M cycles/second
+
+Number of Clock Cycles = Execution x Clock Rate
+Num CC (A) = 10 s x (2 x 10^9) = 20 x 10^9
+
+Target time B = 6 seconds
+
+Number of CC (B) = 1.2 (20 x 10^9)
+Number of CC (B) = 24  x 10^9
+
+The program would take 24 billion clock cycles on computer B
+
+DO TABLE ON TEST
+
+To reiterate:
+ - Clock Rate (A) 2GHZ ,  (B)
+ - CPU Time   (A) 10s  ,  (B)  6s
+ - Total Clock Cycles (A) 20 x 10^9 ,  (B)  24 x 10^9
+ - Frequency B = 24 x 10^9 / 6s = 4 x 10^9 = 4GHz
+
+***** EXAMPLE PROBLEM (p35)
+
+Suppose we have two implementations of the same instruction set architecture. Computer A has a clock cycle time of 250 ps and the CPI of 2.0 cycles/instruction for some program, and computer B has a clock cycle time of 500 ps and a CPI of 1.2 cycles/instructions for the same program. Which computer is faster for this program and by how much?
+
+Reminder: ps stands for picosecond = 10^(-12) seconds.
+Clock_rate = 1 /cycle_time
+cycle_time = 1/ clock_rate
+* Powerwall Items
+*** What is a powerwall about?
+-
+*** Why do we want to raise CPU frequency?
+- We want it as high as possible.
+- The higher the frequency, the more the CPU overheats.
+*** What prevents engineers from raising CPU Frequency
+-
+*** What is overclocking?
+- Telling the CPU clock to fucntion on a higher frequency.
+*** What are the advantages of using lower voltage?
+- Generate less heat!
+- Use less power.
+- Longer battery duration
+*** What are transistors?
+- Transistor is a simple electronic device, that has input and output.
+- Transistor is a core building block of CPUs
+- Difference between transistor and mechanical switch is the speed.
+*** What is transistor leakage?
+- Phenomena of elecricity leaking through the transistor in "off" state.
+*** idk where to put
+- Cooling is crucial to not allow the cpu to overheat and lower itself from its intended frequency.
+* Assembly Language
+- Assembly language is specific to CPU architecture
+** RISC V
+Architecture:
+- CPU Instructions (Instruction Set Architecture)
+- CPU registers(32 general-purpose registers 4 bytes each)
+- Word size(4 bytes)
+- Address size(4 bytes)
+*** Different Architectures
+- MIPS
+- RISC-V
+- x86, x64 (x86-64)
+- M1
+- ARM8
+
+* Assembely
+** Couple of ROSC_V Operations
+- add t6, s1, s0  //t6=s1+s0
+- addi t6, s1, 4
+
+
+Convert to RISC-V the following C++ piece of code
+
+var++;
+
+thevalue of var is already stored in s3
+
+addi s3, s3, 1 // var++;
+
+var = 2 -var; //var value is in t1
+
+addi t2, zero, 2  //place 2 in t2
+sub t1, t2, t1   //var = 2 - vat
+
+-----------
+
+sub t3, zero, t1    //t1 = -var
+addi t1, t3, 2      //t1 = -var +2 = 2 - var
+
+var = var+(25-var)   //var is in s6
+addi t1, zero, 25     # t1 = 25
+sub  t1, t1, s6     # t1 = 25 - s6
+add  s6, s6, t0     # s6 = s6 + t1
+
+** Memory operations (loads and stores)
+-le
+int num;   // comiler reserves 4 bytes of RAM
+num = 20;
+
+loading - copying data from RAM to a CPU register. REDADING RAM
+storing - copying cata from a CPU register to RAM. Writing RAM
+
+lw- load word
+
+lw t5, 2(s0)
+t5 - destination register
+s0 - base register
+2 - offset
+
+address = s0 + 2
+
+*
